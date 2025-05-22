@@ -1,5 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Pages/IniciarSesion/modalRecuperarContrasena.dart';
+import 'package:flutter_application_1/Pages/home/home.dart';
 
 class InicioSesion extends StatelessWidget {
   const InicioSesion({Key? key}) : super(key: key);
@@ -18,11 +20,17 @@ class InicioSesion extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color(0xFF2176FF), // Azul intenso arriba
-              Color(0xFFbde7ff), // Azul claro centro
-              Colors.white, // Blanco abajo
+              Color(0xFF4BA3FD), // Azul clarito arriba
+              Color(0xFF9EC7FC), // Azul claro centro
+              Color(0xFFE8EDF4), // Azul muy claro abajo
+              Color(0xFFFFFFFF), // Blanco puro al final
             ],
-            stops: [0.0, 0.4, 1.0],
+            stops: [
+              0.0, // #4BA3FD - top
+              0.48, // #9EC7FC - 48%
+              0.85, // #E8EDF4 - 85%
+              1.0, // #FFFFFF - bottom
+            ],
           ),
         ),
         child: Stack(
@@ -37,22 +45,21 @@ class InicioSesion extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    // Ilustración superior desde internet
+                    const SizedBox(height: 50), // Espacio arriba
                     SizedBox(
                       height: 150,
-                      child: Image.network(
-                        "https://img.freepik.com/vector-premium/pagina-inicio-sesion-diseno-plano_23-2147919840.jpg",
+                      child: Image.asset(
+                        'assets/AppTareas.png',
                         fit: BoxFit.contain,
                       ),
                     ),
-                    const SizedBox(height: 100), // Más espacio debajo de la ilustración
-                    // "Bienvenido" y subtítulo más abajo
+                    const SizedBox(height: 100),
                     const Text(
                       'Bienvenido',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF2176FF),
+                        color: Color(0xFF4BA3FD), // Azul clarito
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -63,15 +70,19 @@ class InicioSesion extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 36),
-                    // Recuadro de login glassmorphism real
                     ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
                         child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 18,
+                            vertical: 20,
+                          ),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.25), // Muy translúcido
+                            color: Colors.white.withOpacity(
+                              0.25,
+                            ), // Muy translúcido
                             borderRadius: BorderRadius.circular(20),
                             border: Border.all(
                               color: Colors.white.withOpacity(0.3),
@@ -94,14 +105,14 @@ class InicioSesion extends StatelessWidget {
                                 decoration: InputDecoration(
                                   prefixIcon: const Icon(
                                     Icons.person_outline,
-                                    color: Color(0xFF2176FF),
+                                    color: Color(0xFF4BA3FD),
                                   ),
                                   hintText: 'Ingresa tu nombre de usuario',
                                   hintStyle: const TextStyle(
                                     color: Color(0xFFB0B7C3),
                                   ),
                                   filled: true,
-                                  fillColor: Colors.white, // INPUT BLANCO
+                                  fillColor: Colors.white,
                                   contentPadding: const EdgeInsets.symmetric(
                                     vertical: 12,
                                   ),
@@ -126,14 +137,14 @@ class InicioSesion extends StatelessWidget {
                                 decoration: InputDecoration(
                                   prefixIcon: const Icon(
                                     Icons.lock_outline,
-                                    color: Color(0xFF2176FF),
+                                    color: Color(0xFF4BA3FD),
                                   ),
                                   hintText: 'Ingresa tu contraseña',
                                   hintStyle: const TextStyle(
                                     color: Color(0xFFB0B7C3),
                                   ),
                                   filled: true,
-                                  fillColor: Colors.white, // INPUT BLANCO
+                                  fillColor: Colors.white,
                                   contentPadding: const EdgeInsets.symmetric(
                                     vertical: 12,
                                   ),
@@ -152,13 +163,21 @@ class InicioSesion extends StatelessWidget {
                                 height: 44,
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Color(0xFF2176FF),
+                                    backgroundColor: Color(0xFF4BA3FD),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     elevation: 0,
                                   ),
-                                  onPressed: () {},
+                                  onPressed:
+                                      () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder:
+                                              (context) =>
+                                                  const DashboardView(),
+                                        ),
+                                      ),
                                   child: const Text(
                                     'Iniciar Sesión',
                                     style: TextStyle(
@@ -172,7 +191,19 @@ class InicioSesion extends StatelessWidget {
                               const SizedBox(height: 10),
                               Center(
                                 child: TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      isScrollControlled: true,
+                                      barrierColor: Colors.black.withOpacity(
+                                        0.18,
+                                      ),
+                                      backgroundColor: Colors.transparent,
+                                      builder:
+                                          (context) =>
+                                              const RecuperarContrasenaModal(),
+                                    );
+                                  },
                                   style: TextButton.styleFrom(
                                     padding: EdgeInsets.zero,
                                     minimumSize: Size(0, 0),
@@ -196,18 +227,14 @@ class InicioSesion extends StatelessWidget {
                 ),
               ),
             ),
-            // Logo fijado abajo centrado pero más arriba
             Positioned(
               left: 0,
               right: 0,
-              bottom: 160, // Puedes ajustar este valor según lo que necesites
+              bottom: 130,
               child: Center(
                 child: SizedBox(
-                  height: 48,
-                  child: Image.network(
-                    "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
-                    fit: BoxFit.contain,
-                  ),
+                  height: 36,
+                  child: Image.asset('assets/gm.png', fit: BoxFit.contain),
                 ),
               ),
             ),
