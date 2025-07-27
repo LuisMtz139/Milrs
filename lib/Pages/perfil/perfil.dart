@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Pages/botonesBar.dart'; // Ajusta la ruta según tu estructura
+import 'package:flutter_application_1/Pages/botonesBar.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
@@ -266,6 +266,7 @@ class ProfileView extends StatelessWidget {
           } else if (idx == 2) {
             Navigator.pushReplacementNamed(context, '/calendario');
           }
+          // El 3 es perfil, así que no hace nada
         },
       ),
     );

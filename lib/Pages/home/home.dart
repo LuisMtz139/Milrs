@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Pages/botonesBar.dart';
 import 'package:flutter_application_1/Pages/home/tareasCompletadas.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:flutter_application_1/Pages/botonesBar.dart'; // Aquí importas SOLO tu barra de navegación
 
 // --- HEADER CON SEPARACIÓN --- //
 class CustomHeader extends StatelessWidget {
@@ -319,14 +319,9 @@ class _PageDot extends StatelessWidget {
 }
 
 // --- SOLO USAS CustomBottomNavBar --- //
-class DashboardView extends StatefulWidget {
+class DashboardView extends StatelessWidget {
   const DashboardView({super.key});
-  @override
-  State<DashboardView> createState() => _DashboardViewState();
-}
 
-class _DashboardViewState extends State<DashboardView> {
-  int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -350,8 +345,18 @@ class _DashboardViewState extends State<DashboardView> {
         ),
       ),
       bottomNavigationBar: CustomBottomNavBar(
-        currentIndex: selectedIndex,
-        onTap: (idx) => setState(() => selectedIndex = idx),
+        currentIndex: 0, // Home es 0
+        onTap: (idx) {
+          if (idx == 0) {
+            // Ya estás en home, no haces nada
+          } else if (idx == 1) {
+            Navigator.pushReplacementNamed(context, '/tareas');
+          } else if (idx == 2) {
+            Navigator.pushReplacementNamed(context, '/calendario');
+          } else if (idx == 3) {
+            Navigator.pushReplacementNamed(context, '/perfil');
+          }
+        },
       ),
     );
   }
